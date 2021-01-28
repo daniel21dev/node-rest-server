@@ -8,8 +8,7 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 // importacion de los endpoints
-app.use( require('./routes/usuario') )
-
+app.use( require('./routes/index'));
 
 // configuracion mongoose ( para que no de advertencias )
 mongoose.set('useFindAndModify', false);

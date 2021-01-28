@@ -1,13 +1,13 @@
 const express = require('express')
 
 const bcrypt = require('bcrypt');
-const _ = require('underscore')
-const Usuario = require('../models/usuario')
+const _ = require('underscore');
+const Usuario = require('../models/usuario');
+const { verficaToken,verfificaAdmin_Role } = require('../middlewares/authenticacion');
+const app = express();
 
-const app = express()
+app.get('/usuario', verficaToken, (req,res)=>{
 
-app.get('/usuario', (req,res)=>{
-    
     // en "req.query" vienen los parametros opcionales
     let desde = req.query.desde || 0;
     desde = Number( desde );
@@ -38,7 +38,8 @@ app.get('/usuario', (req,res)=>{
 
 })
 
-app.post('/usuario', (req,res)=>{
+app.post('/usuario', [verficaToken,verfificaAdmin_Role], (req,res)=>{
+
 
     let body = req.body
 
@@ -69,7 +70,7 @@ app.post('/usuario', (req,res)=>{
 })
 
 // parametro :id
-app.put('/usuario/:id', (req,res)=>{
+app.put('/usuario/:id', [verficaToken,verfificaAdmin_Role], (req,res)=>{
 
     let id = req.params.id;
     let body = _.pick( req.body, ['nombre','email','img','role','estado'] );
@@ -94,8 +95,8 @@ app.put('/usuario/:id', (req,res)=>{
     
 })
 
-app.delete('/usuario/:id', (req,res)=>{
-    
+app.delete('/usuario/:id',verficaToken, (req,res)=>{
+
     let id = req.params.id;
     let estado = false;
 
