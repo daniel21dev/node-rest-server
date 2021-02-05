@@ -9,7 +9,6 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 // importacion de los endpoints
 app.use( require('./routes/index'));
-
 // habilitar la carpeta public
 app.use( express.static( path.resolve(__dirname,'./public') ) );
 // configuracion mongoose ( para que no de advertencias )
@@ -26,7 +25,7 @@ mongoose.connect(process.env.URLDB,(err, res)=>{
 // listener escuchando las peticiones
 app.listen(process.env.PORT,()=>{
     console.log('escuchando puerto: ', process.env.PORT);
-})
+});
 
 
 
